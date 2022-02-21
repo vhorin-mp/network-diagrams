@@ -1,0 +1,33 @@
+
+
+.network {
+  height: 90vh;
+  margin-top: 20px;
+  border: 1px solid #d4d2d2;
+}
+
+.info {
+  margin-top: 20px;
+}
+
+.active-item {
+  min-height: 90px;
+}
+
+.no-data {
+  color: #a5a2a2;
+}
+
+.link-item {
+  color: #1f58cb;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.link-item:hover {
+  color: #0e2f72;
+}
+
+.active-item p.h4 {
+  margin-bottom: 0;
+}
