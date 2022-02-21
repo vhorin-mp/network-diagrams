@@ -41,10 +41,30 @@ function renderSelectedNode(author, graphData) {
     `;
 }
 
+function renderSearchItems(query, graphData) {
+  const authors = graphData.nodes.filter(({ name }) =>
+    name.toLowerCase().includes(query.toLowerCase()),
+  );
+  if (authors.length > 0) {
+    return authors
+      .map(
+        ({ name, id }) => `
+          <li data-id="${id}">
+            ${name}
+          </li>
+        `,
+      )
+      .join('');
+  } else {
+    return '<span class="no-search-data">No authors found</span>';
+  }
+}
+
 initGraph({
   domains,
   defaultDomain: 'soil-carbon',
   renderSelectedNode,
+  renderSearchItems,
   noDataMessage: 'No author selected',
 });
 

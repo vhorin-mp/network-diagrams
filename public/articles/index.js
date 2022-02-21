@@ -15,7 +15,7 @@ function renderSelectedNode(article, graphData) {
     .map(
       ({ articleTitle, id }) => `
           <span class="link-item" data-id="${id}">
-            ${truncate(articleTitle)}
+            ${truncate(articleTitle, 30)}
           </span>
         `,
     )
@@ -42,6 +42,25 @@ function renderSelectedNode(article, graphData) {
         Common articles: ${coArticlesHTML || '-'}
       </div>
     `;
+}
+
+function renderSearchItems(query, graphData) {
+  const articles = graphData.nodes.filter(({ articleTitle }) =>
+    articleTitle.toLowerCase().includes(query.toLowerCase()),
+  );
+  if (articles.length > 0) {
+    return articles
+      .map(
+        ({ articleTitle, id }) => `
+          <li data-id="${id}">
+            ${articleTitle}
+          </li>
+        `,
+      )
+      .join('');
+  } else {
+    return '<span class="no-search-data">No articles found</span>';
+  }
 }
 
 initGraph({

@@ -5,6 +5,7 @@ function initGraph({
   domains,
   defaultDomain,
   renderSelectedNode,
+  renderSearchItem,
   nodeColor = '#97c2fc',
   nodeBorderColor = '#307fea',
   chosenNodeColor = '#e08383',
@@ -14,6 +15,8 @@ function initGraph({
   noDataMessage = 'No item selected',
 }) {
   const container = document.getElementById('network');
+  const searchDropdown = document.getElementById('search_dropdown');
+  const searchInput = document.getElementById('search');
   const options = {
     nodes: {
       shape: 'dot',
@@ -88,6 +91,38 @@ function initGraph({
   document.getElementById('active_item').addEventListener('click', (e) => {
     const nodeId = e.target?.dataset?.id;
     if (nodeId) {
+      network.selectNodes([nodeId]);
+      selectNode(nodeId);
+    }
+  });
+
+  searchInput?.addEventListener('focus', (e) => {
+    if (searchInput.value) {
+      searchDropdown.classList.add('show');
+    }
+  });
+
+  searchInput?.addEventListener('blur', (e) => {
+    setTimeout(() => searchDropdown.classList.remove('show'), 20);
+  });
+
+  searchInput?.addEventListener('keyup', (e) => {
+    if (searchInput.value.length >= 1) {
+      searchDropdown.innerHTML = renderSearchItems(
+        searchInput.value,
+        graphData,
+      );
+      searchDropdown.classList.add('show');
+    } else {
+      searchDropdown.innerHTML = '';
+      searchDropdown.classList.remove('show');
+    }
+  });
+
+  searchDropdown?.addEventListener('mousedown', (e) => {
+    const nodeId = e.target?.dataset?.id;
+    if (nodeId) {
+      searchInput.value = '';
       network.selectNodes([nodeId]);
       selectNode(nodeId);
     }
